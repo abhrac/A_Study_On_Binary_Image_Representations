@@ -1,6 +1,6 @@
 # Program to get the run-forest representation of an input image.
 # Usage: python get_run_forest_representation.py path-to-input-image
-# Example: python get_run_forest_representation.py ./test/im1.jpg
+# Example: python get_run_forest_representation.py ../test/im1.jpg
 # Note: In this impementation, runs of 1s have been considered.
 
 import numpy as np
@@ -89,9 +89,9 @@ def convert_to_run_forest(x):
         col = x[:, i]
 
         # Get run-forest representation for ith column
-        # and append a tuple containing index of the
-        # ith column and the run-forest list
-        rf_columns.append((i, column_list(col)))
+        # and append the run-forest list to the list 
+        # of run-forest columns
+        rf_columns.append(column_list(col))
 
     # Get the final run-forest by creating a tuple containing
     # the image-dimensions and the list of run-forest columns
@@ -125,14 +125,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('im_path', type=str)
     args = parser.parse_args()
+
     # Get image-path from parsed command-line argument
     im_path = args.im_path
+
     # Open image from the given path and convert image to grayscale
     img = Image.open(im_path).convert('L') #.resize((256, 256), Image.ANTIALIAS)
+    
     # Binarize input image
     img = binarize_image(img)
+    
     # Convert binarized image to corresponding run-forest representation
     run_forest = convert_to_run_forest(img)
+    
     # Save the run-forest representation as a text-file
     save_run_forest(run_forest, im_path)
     return 0
