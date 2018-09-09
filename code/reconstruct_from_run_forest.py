@@ -60,6 +60,7 @@ def parse_run_forest_file(rf_path):
     return (run_forest)
 
 def save_image(im, rf_path):
+    # Function for saving the reconstructed image
     im_name = rf_path.split('/')[-1].split('.')[0]
     im_path = '../reconstructed_images/'
     if (not os.path.exists(im_path)):
@@ -85,6 +86,8 @@ def main():
 
     # Display the reconstructed binary image
     Image.fromarray(bin_im * 255).show()
+
+    # Save the reconstructed binary image
     save_image(bin_im, rf_path)
     return 0
 
