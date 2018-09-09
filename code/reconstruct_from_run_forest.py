@@ -5,6 +5,7 @@
 import numpy as np
 from PIL import Image
 import argparse
+import os
 
 def run_forest_to_binary(rf):
     # Function to reconstruct binary image from its run-forest representation
@@ -58,6 +59,13 @@ def parse_run_forest_file(rf_path):
     # Return the parsed run-forest
     return (run_forest)
 
+def save_image(im, rf_path):
+    im_name = rf_path.split('/')[-1].split('.')[0]
+    im_path = '../reconstructed_images/'
+    if (not os.path.exists(im_path)):
+        os.makedirs(im_path)
+    Image.fromarray(im * 255).convert('L').save((im_path + 'reconstructed_' + im_name + '.png'), "PNG")
+
 def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser()
@@ -77,6 +85,7 @@ def main():
 
     # Display the reconstructed binary image
     Image.fromarray(bin_im * 255).show()
+    save_image(bin_im, rf_path)
     return 0
 
 if __name__ == '__main__':
