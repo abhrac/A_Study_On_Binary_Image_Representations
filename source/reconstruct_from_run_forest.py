@@ -59,10 +59,9 @@ def parse_run_forest_file(rf_path):
     # Return the parsed run-forest
     return (run_forest)
 
-def save_image(im, rf_path):
+def save_image(im, rf_path, im_prefix='', im_path='../reconstructed_images/run_forest/'):
     # Function for saving the reconstructed image
-    im_name = rf_path.split('/')[-1].split('.')[0]
-    im_path = '../reconstructed_images/run_forest/'
+    im_name = im_prefix + rf_path.split('/')[-1].split('.')[0] 
     if (not os.path.exists(im_path)):
         os.makedirs(im_path)
     Image.fromarray(im * 255).convert('L').save((im_path + 'reconstructed_' + im_name + '.png'), "PNG")
