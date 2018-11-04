@@ -55,10 +55,9 @@ def parse_qt_code_file(qt_code_path):
         quadtree[leaf[0]] = int(leaf[1])
     return quadtree
 
-def save_reconstructed_im(reconstructed_im, qt_code_path):
+def save_reconstructed_im(reconstructed_im, qt_code_path, im_path='../reconstructed_images/quadtree/', im_prefix=''):
     # Function for saving an image reconstructed from its quadtree representation
-    im_name = 'reconstructed_' + qt_code_path.split('/')[-1].split('.')[0].split('_')[0] + '_quadtree.png'
-    im_path = '../reconstructed_images/quadtree/'
+    im_name = 'reconstructed_' + im_prefix + '_'.join(qt_code_path.split('/')[-1].split('.')[0].split('_')[0:-2]) + '_quadtree.png'
     if (not os.path.exists(im_path)):
         os.makedirs(im_path)
     Image.fromarray((reconstructed_im * 255)).convert('L').save((im_path + im_name), 'PNG')

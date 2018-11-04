@@ -100,7 +100,7 @@ def convert_to_run_forest(x):
     # Return the final run-forest representation
     return (run_forest)
 
-def save_run_forest(rf, im_path):
+def save_run_forest(rf, im_path, target_path='../run_forest_representations/'):
     # Function for saving the run-forest representation as a text-file
 
     # Get image name
@@ -108,14 +108,14 @@ def save_run_forest(rf, im_path):
 
     # Create folder for saving run-forest representations if it
     # doesn't already exist
-    if(not os.path.exists('../run_forest_representations/')):
-            os.makedirs('../run_forest_representations/')
+    if(not os.path.exists(target_path)):
+            os.makedirs(target_path)
 
     # Set path for saving file
-    file_name = '../run_forest_representations/' + im_name + '_run_forest.txt'
+    file_name = target_path + im_name + '_run_forest.txt'
 
     # Open the file and write the run-forest representation
-    with open(file_name, 'a') as rf_file:
+    with open(file_name, 'w') as rf_file:
         rf_file.write((str(rf[0]) + '\n'))
         for i in rf[1]:
             rf_file.write((str(i) + '\n'))
@@ -138,8 +138,11 @@ def main():
     # Convert binarized image to corresponding run-forest representation
     run_forest = convert_to_run_forest(img)
     
+    # Set target_path
+    target_path = '../run_forest_representations/1024x1024/'
+
     # Save the run-forest representation as a text-file
-    save_run_forest(run_forest, im_path)
+    save_run_forest(run_forest, im_path, target_path)
     return 0
 
 if __name__ == '__main__':

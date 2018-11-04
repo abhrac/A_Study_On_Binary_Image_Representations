@@ -1,8 +1,7 @@
 # Program to concatenate two images based on their run-forest representations
 # Usage: python concatenate_run_forests.py path_to_image_1 path_to_image_2
-# Example: python concatenate_run_forests.py ../test_images/im1.jpg ../test_images/im2.jpg
+# Example: python concatenate_run_forests.py ../run_forest_representations/im1_256x256_run_forest.txt ../run_forest_representations/im2_256x256_run_forest.txt
 
-from get_run_forest_representation import *
 from reconstruct_from_run_forest import *;
 from PIL import Image
 import cv2
@@ -94,16 +93,13 @@ def vertically_concatenate_run_forests(rf1, rf2):
 def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('image_1', type=str)
-    parser.add_argument('image_2', type=str)
+    parser.add_argument('rf_1', type=str)
+    parser.add_argument('rf_2', type=str)
     args = parser.parse_args()
 
-    # Binarize given images
-    im1 = binarize_image(cv2.resize(np.array(Image.open(args.image_1).convert('L')), (256, 256)))
-    im2 = binarize_image(cv2.resize(np.array(Image.open(args.image_2).convert('L')), (256, 256)))
-    
-    # Obtain run-forest representations of two images
-    rf1, rf2 = convert_to_run_forest(im1), convert_to_run_forest(im2)
+    # Parse run-forest files
+    rf1 = parse_run_forest_file(args.rf_1)
+    rf2 = parse_run_forest_file(args.rf_2)
 
     # Horizontally concatenate the run-forests of the 2 given images
     horz_concat_rf = horizontally_concatenate_run_forests(rf1, rf2)
@@ -118,8 +114,8 @@ def main():
     vert_concat_bin = run_forest_to_binary(vert_concat_rf)
     
     # Save concatenated images
-    save_image(horz_concat_bin, args.image_1, im_prefix='horizontal_rf_concat_', im_path='../reconstructed_images/run_forest/concatenated_images/')
-    save_image(vert_concat_bin, args.image_1, im_prefix='vertical_rf_concat_', im_path='../reconstructed_images/run_forest/concatenated_images/')
+    save_image(horz_concat_bin, args.rf_1, im_prefix='horizontal_rf_concat_', im_path='../reconstructed_images/run_forest/concatenated_images/')
+    save_image(vert_concat_bin, args.rf_1, im_prefix='vertical_rf_concat_', im_path='../reconstructed_images/run_forest/concatenated_images/')
 
     # Display concatenated images
     Image.fromarray(horz_concat_bin * 255).show()

@@ -1,5 +1,5 @@
 from PIL import Image
-from reconstruct_from_run_forest import *;
+from reconstruct_from_run_forest import *
 import argparse
 
 def decrement_column_indices(col, l):
@@ -7,19 +7,29 @@ def decrement_column_indices(col, l):
         col[i] = (run[0] - l), (run[1] - l)
     return col
 
+def remove_null_runs(upper, lower):
+    if (upper[-1][0] == upper[-1][1]):
+        upper = upper[:-1]
+    if (lower[0][0] == lower[0][1]):
+        lower = lower[1:]
+    return (upper, lower)
+
 def split_column(col, l):
     mid = int(l / 2)
     for (i, run) in enumerate(col):
         if (run[0] <= mid <= run[1]):
             upper = col[:i] + [(run[0], mid)]
             lower = [(mid, run[1])] + col[(i + 1):]
+            upper, lower = remove_null_runs(upper, lower)
             decrement_column_indices(lower, mid)
             return(upper, lower)
         if (mid < run[0]):
             upper = col[:i]
             lower = decrement_column_indices(col[i:], mid)
             return(upper, lower)
-    return([], [])
+    upper = col[:mid]
+    lower = decrement_column_indices(col[mid:], mid)
+    return(upper, lower)
 
 def horz_split_rf(rf):
     n_rows, n_cols = rf[0]

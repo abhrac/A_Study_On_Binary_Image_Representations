@@ -44,13 +44,12 @@ def convert_to_quadtree(im, im_dims=(256, 256)):
     leaves = recursive_decomposition(bin_im, '0', [])
     return leaves
 
-def save_quadtree_codes(im_path, leaves, im_dims):
+def save_quadtree_codes(im_path, leaves, im_dims, target_path='../quadtree_codes/'):
     # Save the quadtree representation of the given binary image
-    path = '../quadtree_codes/'
-    if (not os.path.exists(path)):
-        os.makedirs(path)
+    if (not os.path.exists(target_path)):
+        os.makedirs(target_path)
     file_name = im_path.split('/')[-1].split('.')[0]
-    code_file = path + file_name + '_quadtree_codes.txt'
+    code_file = target_path + file_name + '_quadtree_codes.txt'
     with open(code_file,'w') as f:
         f.write((str(im_dims) + '\n'))
         for leaf in leaves:
@@ -66,12 +65,16 @@ def main():
     # Open image from the given location
     im = Image.open(im_path).convert('L')
     # Specify image resize dimensions for computational simplifications
-    im_dims = (256, 256)
+    im_dims = (1024, 1024)
     # Decompose the given image into its quadtree representation
     # and get the leaf codes for the corresponding quadtree
     leaves = convert_to_quadtree(im, im_dims=im_dims)
+    
+    # Set target path
+    target_path = '../quadtree_codes/1024x1024/'
+    
     # Save the quadtree leaf codes
-    save_quadtree_codes(im_path, leaves, im_dims)
+    save_quadtree_codes(im_path, leaves, im_dims, target_path)
     return 0
 
 if __name__ == '__main__':

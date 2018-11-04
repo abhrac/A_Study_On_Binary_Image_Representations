@@ -2,8 +2,9 @@
 # Usage: python quadtree_to_run_forest.py path_to_text_file_containing_quadtree_codes
 # Example: python quadtree_to_run_forest.py ../quadtree_codes/im1_quadtree_codes.txt
 
-from reconstruct_from_run_forest import *;
-from concatenate_run_forests import *;
+from reconstruct_from_run_forest import *
+from concatenate_run_forests import *
+from utils.save_utils import *
 import argparse
 
 def parse_qt_code_file(qt_code_path):
@@ -102,6 +103,12 @@ def main():
 
     # Reconstruct the image from the obtained run-forest (for verification)
     bin_im = run_forest_to_binary(run_forest)
+
+    # Set target path
+    target_path = '../run_forest_representations/from_quadtrees/'
+
+    # Save obtained run-forest
+    save_run_forest(run_forest, qt_path, target_path)
 
     # Display the image reconstructed from the run-forest representation of
     # the given quadtree
