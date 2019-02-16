@@ -1,6 +1,6 @@
 import os
 
-def save_run_forest(rf, im_path, target_path='../run_forest_representations/'):
+def save_run_forest(rf, im_path, suffix='_run_forest', target_path='../run_forest_representations/'):
     # Function for saving the run-forest representation as a text-file
 
     # Get image name
@@ -12,7 +12,7 @@ def save_run_forest(rf, im_path, target_path='../run_forest_representations/'):
             os.makedirs(target_path)
 
     # Set path for saving file
-    file_name = target_path + im_name + '_run_forest.txt'
+    file_name = target_path + im_name + suffix + '_.txt'
 
     # Open the file and write the run-forest representation
     with open(file_name, 'w') as rf_file:

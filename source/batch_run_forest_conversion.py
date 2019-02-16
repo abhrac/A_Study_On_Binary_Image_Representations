@@ -5,7 +5,7 @@ import sys
 from get_run_forest_representation import *;
 
 def batch_run_forest_conversion(images):
-    target_path = '../run_forest_representations/1024x1024/'
+    target_path = '../run_forest_representations/256x256/'
     for im in images:
         if (sys.platform[:3] == 'win'):
             image_name = im.split('\\')[-1].split('.')[0]

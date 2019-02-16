@@ -20,13 +20,13 @@ def binarize_images(images, target_path, target_im_dims):
         # Obtain image name from image path based on the platform
         # on which the program is running
         if (sys.platform[:3] == 'win'):
-            image_name = image.split('\\')[-1].split('.')[0] + '_' + sub_path
+            image_name = image.split('\\')[-1].split('.')[0]
         else:
-            image_name = image.split('/')[-1].split('.')[0] + '_' + sub_path
+            image_name = image.split('/')[-1].split('.')[0]
 
         # Set target image name
         image_name = image_name  + '_' + sub_path
-        
+
         # If target folder does not exist, create it
         if (not os.path.exists(target_path)):
             os.makedirs(target_path)
@@ -82,7 +82,7 @@ def main():
     images = read_images(dataset_path)
 
     # Set dimensions of target images
-    target_im_dims = (1024, 1024)
+    target_im_dims = (256, 256)
 
     # Convert all images to grayscale and save
     convert_to_grayscale(images, target_path, target_im_dims)
