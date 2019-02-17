@@ -55,7 +55,7 @@ def erode_run_forest(run_forest, struct_elm):
             if (center == 1):
                 if (has_background(rf_cols, i, j, struct_elm)):
                     eroded_rf_cols = invert_pixel(eroded_rf_cols, center_x, center_y)
-    return eroded_rf_cols
+    return (run_forest[0], eroded_rf_cols)
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
@@ -68,8 +68,7 @@ def main():
     run_forest = parse_run_forest_file(rf_path)
     struct_elm = get_structuring_element()
 
-    eroded_rf_cols = erode_run_forest(run_forest, struct_elm)
-    eroded_rf = run_forest[0], eroded_rf_cols
+    eroded_rf = erode_run_forest(run_forest, struct_elm)
 
     save_run_forest(eroded_rf, rf_path, suffix='_eroded', target_path='../run_forest_representations/eroded/')
 

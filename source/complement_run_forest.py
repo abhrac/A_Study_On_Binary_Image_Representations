@@ -41,7 +41,11 @@ def main():
                     target_path='../run_forest_representations/complemented/')
 
     bin_im_prime = run_forest_to_binary(rf_prime)
+    save_image(bin_im_prime, rf_path, im_prefix='complemented_',
+                im_path='../reconstructed_images/complemented/')
     Image.fromarray(bin_im_prime * 255).show()
+    
+    return 0
 
 if __name__ == '__main__':
     main()
