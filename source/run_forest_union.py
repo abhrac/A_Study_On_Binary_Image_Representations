@@ -3,12 +3,14 @@ from utils.save_utils import *
 from reconstruct_from_run_forest import *
 import argparse
 
-def merge_first(run1, run2):
+def merge_runs(run1, run2):
     start = min(run1[0], run2[0])
     end = max(run1[1], run2[1])
     return (start, end)
 
 def append_run(runs, run):
+    if (runs == []):
+        return [run]
     last_run = runs[-1]
     if (run[0] < last_run[1]):
         end = max(run[1], last_run[1])
@@ -17,17 +19,33 @@ def append_run(runs, run):
     runs.append(run)
     return (runs)
 
+def disjoint(pair):
+    run1, run2 = pair
+    if ((run2[0] <= run1[0] < run2[1]) or (run1[0] <= run2[0] < run1[1])):
+        return False
+    return True
+
+def append_runs(u_col, run1, run2):
+    pair = sorted([run1, run2])
+    if (not disjoint(pair)):
+        merged_run = merge_runs(run1, run2)
+        u_col = append_run(u_col, merged_run)
+    else:
+        u_col = append_run(u_col, pair[0])
+        u_col = append_run(u_col, pair[1])
+    return u_col
+
 def merge_non_null_columns(col1, col2):
     u_col = []
-    first = merge_first(col1[0], col2[0])
-    u_col.append(first)
     l_col1, l_col2 = len(col1), len(col2)
     max_runs = max(l_col1, l_col2)
     for j in range(max_runs):
-        if (j < l_col1):
-            u_col = append_run(u_col, col1[j])
-        if (j < l_col2):
+        if (j >= l_col1):
             u_col = append_run(u_col, col2[j])
+        elif (j >= l_col2):
+            u_col = append_run(u_col, col1[j])
+        else:
+            u_col = append_runs(u_col, col1[j], col2[j])
     return u_col
 
 def run_forest_union(rf1, rf2):
