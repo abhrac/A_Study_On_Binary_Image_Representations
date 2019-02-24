@@ -12,7 +12,7 @@ def save_run_forest(rf, im_path, suffix='_run_forest', target_path='../run_fores
             os.makedirs(target_path)
 
     # Set path for saving file
-    file_name = target_path + im_name + suffix + '_.txt'
+    file_name = target_path + im_name + suffix + '.txt'
 
     # Open the file and write the run-forest representation
     with open(file_name, 'w') as rf_file:
