@@ -16,12 +16,12 @@ def rf_index(rf_cols, i, j):
     return 0
 
 def get_subsample_value(rf_cols, row, col, factor):
-    num_ones = 1
+    num_ones = 0
     for i in range(row, (row+factor)):
         for j in range(col, col+factor):
             if (rf_index(rf_cols, i, j) == 1):
                 num_ones = num_ones + 1
-    return (num_ones > (factor ** 2))
+    return (num_ones >= (factor ** 2))
 
 def get_end_index(rf_cols, col, start, height, factor):
     end = (start // factor) + 1
