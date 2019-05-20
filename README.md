@@ -2,7 +2,7 @@
 A study of various transformations on compressed binary image representations
 
 ## Setup
-An Anaconda setup in Linux is preferred, however a Windows setup would also do.
+All implementations are in Python 3.6.5. An Anaconda setup in Linux is preferred, however a Windows setup would also do.
 
 * Anaconda for Linux (Python 3.6)
 https://docs.anaconda.com/anaconda/install/linux/
