@@ -36,7 +36,7 @@ def rotate_anticlockwise(run_forest):
                 j = end
             j = j - 1
         rotated_rf_cols.append(col)
-    return (rf_dims, rotated_rf_cols)
+    return ((rf_dims[1], rf_dims[0]), rotated_rf_cols)
 
 def get_end_index(rf_cols, i, start):
     num_cols = len(rf_cols)
@@ -59,7 +59,7 @@ def rotate_clockwise(run_forest):
                 j = end
             j = j + 1
         rotated_rf_cols.append(col)
-    return (rf_dims, rotated_rf_cols)
+    return ((rf_dims[1], rf_dims[0]), rotated_rf_cols)
 
 def get_arguments():
     parser = argparse.ArgumentParser()
